@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Café Tueste | Café de especialidad</title>
   <meta name="description" content="Café Tueste, cafetería de especialidad. Consulta nuestra carta, horarios y haz tu pedido por WhatsApp.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,6 +17,9 @@
       --accent: #6B3E26;
       --accent-dark: #55301D;
       --line: #E3D9D1;
+      --wa: #1F8F4E;
+      --wa-dark: #187A41;
+      --notice-h: 2.5rem;
       --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
       --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     }
@@ -53,6 +56,30 @@
       max-width: 960px;
       margin: 0 auto;
       padding: 0 1.5rem;
+    }
+
+    /* Aviso superior */
+    .notice {
+      position: relative;
+      z-index: 3;
+      min-height: var(--notice-h);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.45rem 1rem;
+      background: var(--accent-dark);
+      color: #fff;
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      line-height: 1.4;
+    }
+    .notice strong {
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-right: 0.5rem;
     }
 
     /* Navegación */
@@ -97,8 +124,8 @@
     /* Hero */
     .hero {
       position: relative;
-      min-height: 100vh;
-      min-height: 100svh;
+      min-height: calc(100vh - var(--notice-h));
+      min-height: calc(100svh - var(--notice-h));
       display: flex;
       align-items: center;
       justify-content: center;
@@ -256,7 +283,7 @@
 
     /* Pie */
     footer {
-      padding: 3rem 0;
+      padding: 3rem 0 6rem;
       text-align: center;
       font-size: 0.85rem;
       color: var(--muted);
@@ -270,6 +297,32 @@
       margin-bottom: 0.5rem;
     }
 
+    /* Botón flotante de WhatsApp */
+    .wa-float {
+      position: fixed;
+      right: max(1.25rem, env(safe-area-inset-right));
+      bottom: max(1.25rem, env(safe-area-inset-bottom));
+      z-index: 10;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 3.25rem;
+      padding: 0 1.5rem;
+      background: var(--wa);
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 999px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      transition: background 0.25s ease, transform 0.25s ease;
+    }
+    .wa-float:hover, .wa-float:focus-visible { background: var(--wa-dark); transform: translateY(-2px); }
+    .wa-float:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+
     /* Responsive */
     @media (min-width: 768px) {
       .menu { grid-template-columns: 1fr 1fr; }
@@ -277,6 +330,9 @@
     }
 
     @media (max-width: 520px) {
+      :root { --notice-h: 3.1rem; }
+      .notice { font-size: 0.78rem; letter-spacing: 0.04em; }
+      .notice strong { display: block; margin: 0 0 0.1rem; font-size: 0.7rem; }
       .nav .container { justify-content: center; }
       .nav ul { gap: 1.1rem; }
       section { padding: 4.5rem 0; }
@@ -285,10 +341,27 @@
       .menu h3 { font-size: 1.45rem; }
       .hours th { font-size: 1.2rem; }
       .hours td { font-size: 0.95rem; }
+      .wa-float {
+        right: max(1rem, env(safe-area-inset-right));
+        bottom: max(1rem, env(safe-area-inset-bottom));
+        min-height: 3rem;
+        padding: 0 1.25rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .wa-float { transition: none; }
     }
   </style>
 </head>
 <body>
+
+  <div class="notice" role="status">
+    <p><strong>Nuevo:</strong> tostado de Etiopía esta semana</p>
+  </div>
 
   <header class="hero" id="inicio">
     <nav class="nav" aria-label="Navegación principal">
@@ -407,6 +480,11 @@
       <p>Café de especialidad &middot; &copy; 2025 Café Tueste</p>
     </div>
   </footer>
+
+  <a class="wa-float"
+     href="https://wa.me/34600000000?text=Hola%20Caf%C3%A9%20Tueste%2C%20me%20gustar%C3%ADa%20hacer%20un%20pedido."
+     target="_blank" rel="noopener"
+     aria-label="Hacer un pedido por WhatsApp">Pedir por WhatsApp</a>
 
 </body>
 </html>
